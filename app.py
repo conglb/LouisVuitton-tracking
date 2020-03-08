@@ -38,7 +38,7 @@ def lv_tracking_get():
 
 @app.route('/lv-tracking', methods=['POST'])
 def lv_tracking_post_new_product_id():
-    product_id = request.form["id"]
+    product_id = request.form["myId"]
     product_ids.append(product_id)
     return render_template('lv-tracking.html')
 
