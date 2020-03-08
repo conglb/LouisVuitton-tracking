@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 product_ids = []
 def thread_func():
+    print("sdlkfjsdLLLLLLLLLLLLLLLLLLLLLL")
     for product_id in product_ids:
         response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)), headers=headers)
         app.logger.error("ERRORRRRRRRRRRRRRRRRRRRRRRR")
@@ -31,16 +32,14 @@ def hello_world():
 def test():
     return 'Hello from Flask!'
 
-@app.route('/lv-tracking', methods=['GET'])
+@app.route('/lv-tracking', methods=['GET','POST'])
 def lv_tracking_get():
-    return render_template('lv-tracking.html')
-
-
-@app.route('/lv-tracking', methods=['POST'])
-def lv_tracking_post_new_product_id():
-    product_id = request.form["myId"]
-    product_ids.append(product_id)
-    return render_template('lv-tracking.html')
+    if request.method == 'GET':
+        return render_template('lv-tracking.html')
+    else:
+        product_id = request.form["myId"]
+        product_ids.append(product_id)
+        return render_template('lv-tracking.html')
 
 
 
