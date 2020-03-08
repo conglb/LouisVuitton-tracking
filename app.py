@@ -9,14 +9,15 @@ app = Flask(__name__)
 
 product_ids = []
 def thread_func():
-    print("sdlkfjsdLLLLLLLLLLLLLLLLLLLLLL")
-    for product_id in product_ids:
-        response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)), headers=headers)
-        app.logger.error("ERRORRRRRRRRRRRRRRRRRRRRRRR")
-        app.logger.warning("WARNINGGGGGGGGGGGGGGGGGGGGGGGG")
-        app.logger.info("INFOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-        print(response)
-    time.sleep(7)
+    while True:
+        print(product_ids)
+        for product_id in product_ids:
+            response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)), headers=headers)
+            app.logger.error("ERRORRRRRRRRRRRRRRRRRRRRRRR")
+            app.logger.warning("WARNINGGGGGGGGGGGGGGGGGGGGGGGG")
+            app.logger.info("INFOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+            print(response)
+        time.sleep(7)
 
 main_thread = threading.Thread(target=thread_func)
 main_thread.start()
