@@ -14,24 +14,25 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleW
 while True:
     for product_id in product_ids:
         print(product_id)
-        response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)))
-        print(response.text)
-        json_data = json.loads(response.text)
-        if json_data[product_id]["inStock"] == True:
-            message = Mail(
-                from_email='lv-tracking',
-                to_emails='congmb@gmail.com',
-                subject='Alarm!!!!! Louis Vuitton has a new product',
-                html_content='<strong>{} is now available \n Search for it on Google and purchase it now!</strong>'.format(product_id))
-            try:
+        try:
+            response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)), headers=headers)
+            print(response.text)
+            json_data = json.loads(response.text)
+            if json_data[product_id]["inStock"] == True:
+                print("hehe")
+                message = Mail(
+                    from_email='lv-tracking',
+                    to_emails='congmb@gmail.com',
+                    subject='Alarm!!!!! Louis Vuitton has a new product',
+                    html_content='<strong>{} is now available \n Search for it on Google and purchase it now!</strong>'.format(product_id))
                 sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
                 response = sg.send(message)
                 print(response.status_code)
                 print(response.body)
                 print(response.headers)
-            except Exception as e:
-                print(e.message)
-            product_ids.remove(product_id)
+                product_ids.remove(product_id)
+        except Exception as e:
+            print(e.message)
     time.sleep(7)
 
 
