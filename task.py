@@ -13,7 +13,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleW
 
 while True:
     for product_id in product_ids:
-        response = requests.get("https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074".format(str(product_id)), headers=headers)
+        #https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=fra-fr&pageType=storelocator_section&skuIdList={}&null&_=1583480351074
+        response = requests.get("https://www.google.com/".format(str(product_id)), headers=headers)
         print(response.text)
         json_data = json.loads(response.text)
         if json_data[product_id]["inStock"] == True:
