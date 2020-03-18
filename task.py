@@ -1,7 +1,29 @@
 import requests, json, time
-import sendgrid
 import os
-from sendgrid.helpers.mail import Mail
+import smtplib, ssl
+
+
+port = 25  # 25 110 # For SSL
+smtp_server = "mail.toshiba-tsdv.com"
+sender_email = "cong.leba@toshiba-tsdv.com"  # Enter your address
+receiver_email = "congmb@gmail.com"  # Enter receiver address
+password = input("Type your password and press enter: ")
+message = """\
+Subject: Hi there
+
+Hi there Nguyen Vu Nam. You have a new product which has now on stock at LV.
+
+"""
+
+#context = ssl.create_default_context()
+context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+with smtplib.SMTP(smtp_server, port) as server:
+    server.ehlo()
+    server.starttls()
+    server.login(sender_email, password)
+    server.sendmail(sender_email, receiver_email, message)
+
+
 
 product_ids = []
 f = open("product_ids.txt", "r")
@@ -12,6 +34,7 @@ print(product_ids)
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',}
 
 while True:
+    print("while loop")
     for product_id in product_ids:
         print(product_id)
         try:
@@ -20,16 +43,7 @@ while True:
             json_data = json.loads(response.text)
             if json_data[product_id]["inStock"] == True:
                 print("hehe")
-                message = Mail(
-                    from_email='lv-tracking',
-                    to_emails='congmb@gmail.com',
-                    subject='Alarm!!!!! Louis Vuitton has a new product',
-                    html_content='<strong>{} is now available \n Search for it on Google and purchase it now!</strong>'.format(product_id))
-                sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-                response = sg.send(message)
-                print(response.status_code)
-                print(response.body)
-                print(response.headers)
+                # Send an email here
                 product_ids.remove(product_id)
         except Exception as e:
             print(e.message)
