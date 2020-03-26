@@ -53,7 +53,7 @@ class LouisVuittonAPI(object):
             for cookie in cookies:
                 self.s.cookies.set(cookie['name'], cookie['value'])
         else:
-            self.s.get("http://" + self.lv_base_url)
+            self.s.get("http://" + self.lv_base_url, timeout=5)
 
         print "Region: " + region.upper()
         print "="*60
@@ -72,7 +72,7 @@ class LouisVuittonAPI(object):
 
         info_url = "http://" + self.lv_base_url + "/ajax/product.jsp?storeLang=" + self.lv_lang + "&pageType=product&id=" + sku
 
-        info_soup = BeautifulSoup(self.s.get(info_url).text, "lxml")
+        info_soup = BeautifulSoup(self.s.get(info_url, timeout=5).text, "lxml", timeout=5)
 
         try:
             product_name = info_soup.find("h1", {"itemprop": "name"}).text
@@ -118,7 +118,7 @@ class LouisVuittonAPI(object):
 
         info_url = "http://" + self.lv_base_url + "/ajax/product.jsp?storeLang=" + self.lv_lang + "&pageType=product&id=" + sku
 
-        info_soup = BeautifulSoup(self.s.get(info_url).text, "lxml")
+        info_soup = BeautifulSoup(self.s.get(info_url, timeout=5).text, "lxml")
 
         pid = info_soup.find("input", {"id": "addToWishListFormProductId"})['value']
 
@@ -141,7 +141,7 @@ class LouisVuittonAPI(object):
 
         stock_url = "https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=" + self.lv_lang + "&pageType=product&skuIdList=" + sku
 
-        stock_json_raw = self.s.get(stock_url).text.strip()
+        stock_json_raw = self.s.get(stock_url, timeout=5).text.strip()
         stock_json = json.loads(stock_json_raw)
 
         if stock_json[sku]['inStock']:
@@ -215,7 +215,7 @@ class LouisVuittonAPI(object):
                 print "ATC success."
 
 if __name__ == '__main__':
-    cls()
+    #cls()
     #print "Louis Vuitton API by Luke Davis (@R8T3D)"
     #print "="*60
 
