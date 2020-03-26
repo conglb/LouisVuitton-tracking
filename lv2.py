@@ -53,7 +53,8 @@ class LouisVuittonAPI(object):
             for cookie in cookies:
                 self.s.cookies.set(cookie['name'], cookie['value'])
         else:
-            self.s.get("http://" + self.lv_base_url, timeout=5)
+            print "hehe"
+            #self.s.get("http://" + self.lv_base_url)
 
         print "Region: " + region.upper()
         print "="*60
@@ -138,10 +139,19 @@ class LouisVuittonAPI(object):
 
         sku = sku.upper()
         print "Getting stock status for " + sku + "..."
-
+        headers = {
+            'Origin': 'http://' + self.lv_base_url,
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.8,de;q=0.6',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept': '*/*',
+            'Referer': 'http://uk.louisvuitton.com/eng-gb/products/slender-id-wallet-damier-graphite-nvprod470028v',
+            'Connection': 'keep-alive',
+        }
         stock_url = "https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=" + self.lv_lang + "&pageType=product&skuIdList=" + sku
 
-        stock_json_raw = self.s.get(stock_url, timeout=5).text.strip()
+        stock_json_raw = self.s.get(stock_url, headers=headers, timeout=5).text.strip()
         stock_json = json.loads(stock_json_raw)
 
         if stock_json[sku]['inStock']:
