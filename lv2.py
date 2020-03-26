@@ -149,9 +149,32 @@ class LouisVuittonAPI(object):
             'Referer': 'http://uk.louisvuitton.com/eng-gb/products/slender-id-wallet-damier-graphite-nvprod470028v',
             'Connection': 'keep-alive',
         }
+        params = (
+            ('storeLang', self.lv_lang),
+        )
+        data = [
+          ('_dyncharset', 'UTF-8'),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds', sku),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.catalogRefIds', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.productId', pid),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.productId', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.HSOptionsAsString', '{}'),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.HSOptionsAsString', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.quantity', '1'),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.quantity', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.useForwards', 'true'),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.useForwards', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrder', '--'),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrder', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrderSuccessURL', '/collections/productSheet/forms/addToCartForm.jsp?storeLang=' + self.lv_lang + '&productId=' + pid + '&skuId=' + sku + '&isMoM=false&priceButtonMom=&addToCartSuccess=true'),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrderSuccessURL', ' '),
+          ('/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrderErrorURL', '/collections/productSheet/forms/addToCartForm.jsp?storeLang=' + self.lv_lang + '&productId=' + pid + '&skuId=' + sku + '&isMoM=false&priceButtonMom='),
+          ('_D:/atg/commerce/order/purchase/CartModifierFormHandler.addItemToOrderErrorURL', ' '),
+          ('_DARGS', '/mobile/collections/productSheet/forms/addToCartForm.jsp'),
+        ]
         stock_url = "https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=" + self.lv_lang + "&pageType=product&skuIdList=" + sku
 
-        stock_json_raw = self.s.get(stock_url, headers=headers, timeout=5).text.strip()
+        stock_json_raw = self.s.get(stock_url, headers=headers, params=params, data=data).text.strip()
         stock_json = json.loads(stock_json_raw)
 
         if stock_json[sku]['inStock']:
