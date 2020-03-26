@@ -35,7 +35,7 @@ print(product_ids)
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',}
 
-lv = api.LouisVuittonAPI("EU", True)
+lv = api.LouisVuittonAPI("EU", False)
 while True:
     print("while loop")
     for product_id in product_ids:
