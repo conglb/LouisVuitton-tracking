@@ -1,3 +1,3 @@
-env: pip2 install -r requirements.txt
-task: python2 task.py
+env: pip install -r requirements.txt
+task: python task.py
 
