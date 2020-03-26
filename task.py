@@ -7,7 +7,7 @@ import api
 port = 25  # 25 110 # For SSL
 smtp_server = "mail.toshiba-tsdv.com"
 sender_email = "cong.leba@toshiba-tsdv.com"  # Enter your address
-receiver_email = "congmb@gmail.com"  # Enter receiver address
+receiver_email = "cong.leba@toshiba-tsdv.com"  # Enter receiver address
 #password = input("Type your password and press enter: ")
 message = """\
 Subject: Hi there
