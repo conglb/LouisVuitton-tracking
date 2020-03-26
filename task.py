@@ -7,20 +7,21 @@ port = 25  # 25 110 # For SSL
 smtp_server = "mail.toshiba-tsdv.com"
 sender_email = "cong.leba@toshiba-tsdv.com"  # Enter your address
 receiver_email = "congmb@gmail.com"  # Enter receiver address
-password = input("Type your password and press enter: ")
+#password = input("Type your password and press enter: ")
 message = """\
 Subject: Hi there
 
 Hi there Nguyen Vu Nam. You have a new product which has now on stock at LV.
 
+It's code is 
 """
 
 #context = ssl.create_default_context()
-context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+#context = ssl.SSLContext(ssl.PROTOCOL_TLS)
 with smtplib.SMTP(smtp_server, port) as server:
     server.ehlo()
-    server.starttls()
-    server.login(sender_email, password)
+    #server.starttls()
+    #server.login(sender_email,)
     server.sendmail(sender_email, receiver_email, message)
 
 
@@ -42,7 +43,7 @@ while True:
             print(response.text)
             json_data = json.loads(response.text)
             if json_data[product_id]["inStock"] == True:
-                print("hehe")
+                print("inStock = true")
                 # Send an email here
                 product_ids.remove(product_id)
         except Exception as e:
