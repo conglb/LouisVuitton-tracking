@@ -13,8 +13,8 @@ def cls():
 class LouisVuittonAPI(object):
     def __init__(self, region, browser):
         cls()
-        print "Louis Vuitton API by Luke Davis (@R8T3D)"
-        print "="*60
+        print("Louis Vuitton API by Luke Davis (@R8T3D)")
+        print("="*60)
         self.s = requests.Session()
         self.browser = browser
 
@@ -43,7 +43,7 @@ class LouisVuittonAPI(object):
             self.lv_base_url = self.region_to_url[region.upper()]
             self.lv_lang = self.region_to_lang[region.upper()]
         except:
-            print "Invalid region, correct your spelling or add it."
+            print("Invalid region, correct your spelling or add it.")
             raise ValueError('Invalid region')
 
         if browser:
@@ -55,8 +55,8 @@ class LouisVuittonAPI(object):
         else:
             self.s.get("http://" + self.lv_base_url)
 
-        print "Region: " + region.upper()
-        print "="*60
+        print("Region: " + region.upper())
+        print("="*60)
 
     def get_product_info(self, sku):
         """
@@ -67,8 +67,8 @@ class LouisVuittonAPI(object):
         """
 
         sku = sku.upper()
-        print "Getting product info for " + sku + "..."
-        print " "
+        print("Getting product info for " + sku + "...")
+        print(" ")
 
         info_url = "http://" + self.lv_base_url + "/ajax/product.jsp?storeLang=" + self.lv_lang + "&pageType=product&id=" + sku
 
@@ -83,21 +83,21 @@ class LouisVuittonAPI(object):
             display = True
         except:
             display = False
-            print "Product couldn't be found."
+            print("Product couldn't be found.")
 
         stock = self.get_stock_status(sku)
         
         if display:
-            print "Product Info:"
-            print "-"*40
-            print "SKU: " + sku
-            print "PID: " + product_pid
-            print "Name: " + product_name
-            print "Price: " + product_price
-            print "Description: " + product_description
-            print "Image URL: " + product_image
-            print "Available: " + str(stock)
-            print "-"*40
+            print("Product Info:")
+            print("-"*40)
+            print("SKU: " + sku)
+            print("PID: " + product_pid)
+            print("Name: " + product_name)
+            print("Price: " + product_price)
+            print("Description: " + product_description)
+            print("Image URL: " + product_image)
+            print("Available: " + str(stock))
+            print("-"*40)
 
         if stock:
             choice = raw_input("Product appears to be in stock. \nAttempt to add product to cart? (Y/N) ")
@@ -114,7 +114,7 @@ class LouisVuittonAPI(object):
         """
 
         sku = sku.upper()
-        print "Getting PID for " + sku + "..."
+        print("Getting PID for " + sku + "...")
 
         info_url = "http://" + self.lv_base_url + "/ajax/product.jsp?storeLang=" + self.lv_lang + "&pageType=product&id=" + sku
 
@@ -137,7 +137,7 @@ class LouisVuittonAPI(object):
         """
 
         sku = sku.upper()
-        print "Getting stock status for " + sku + "..."
+        print("Getting stock status for " + sku + "...")
 
         stock_url = "https://secure.louisvuitton.com/ajaxsecure/getStockLevel.jsp?storeLang=" + self.lv_lang + "&pageType=product&skuIdList=" + sku
 
@@ -160,13 +160,13 @@ class LouisVuittonAPI(object):
         pid = self.get_pid(sku)
 
         if self.get_stock_status(sku):
-            print sku + " is available."
+            print(sku + " is available.")
             cart = True
         else:
-            print sku + " is NOT available."
+            print(sku + " is NOT available.")
             cart = False
 
-        print "Attempting to ATC..."
+        print("Attempting to ATC...")
 
         headers = {
             'Origin': 'http://' + self.lv_base_url,
@@ -211,13 +211,13 @@ class LouisVuittonAPI(object):
                 self.driver.get("http://uk.louisvuitton.com/" + self.lv_lang + "/cart")
                 raw_input()
             else:
-                print "Status Code: " +  str(ATC.status_code)
-                print "ATC success."
+                print("Status Code: " +  str(ATC.status_code))
+                print("ATC success.")
 
 if __name__ == '__main__':
     cls()
-    print "Louis Vuitton API by Luke Davis (@R8T3D)"
-    print "="*60
+    print("Louis Vuitton API by Luke Davis (@R8T3D)")
+    print("="*60)
 
     browser = raw_input("Browser? (Y/N) ")
 
