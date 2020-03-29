@@ -13,8 +13,6 @@ def cls():
 class LouisVuittonAPI(object):
     def __init__(self, region, browser):
         cls()
-        print "Louis Vuitton API by Luke Davis (@R8T3D)"
-        print "="*60
         self.s = requests.Session()
         self.browser = browser
 
@@ -53,7 +51,7 @@ class LouisVuittonAPI(object):
             for cookie in cookies:
                 self.s.cookies.set(cookie['name'], cookie['value'])
         else:
-            print "hehe"
+            print "START"
             #self.s.get("http://" + self.lv_base_url)
 
         print "Region: " + region.upper()
